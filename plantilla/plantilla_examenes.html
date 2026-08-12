@@ -61,15 +61,20 @@
     const CONFIG_EXAMEN = {
       totalPreguntas: 40,
       duracionMinutos: 90,
-      notaMinima: 70, // 70% de aciertos para considerar APTO
+      notaMinima: 70, // 70% de aciertos para considerar APTO (Nota de referencia provisional)
       distribucion: {
-        "ARTICULADO": 8,
-        "IT-1.1": 6,
-        "IT-1.2": 8,
-        "IT-1.3": 6,
+        "ARTICULADO": 6,
+        "IT-1.1": 5,
+        "IT-1.2": 5,
+        "IT-1.3": 4,
         "IT-2": 4,
         "IT-3": 4,
-        "IT-4": 4
+        "IT-4": 4,
+        "APENDICE-1": 2,
+        "APENDICE-2": 2,
+        "APENDICE-3": 2,
+        "APENDICE-4": 1,
+        "APENDICE-5": 1
       }
     };
 
@@ -310,6 +315,7 @@
               <strong class="text-xs text-brand-600 dark:text-brand-400">${actual.referencia || actual.bloque}</strong>
               <span class="text-slate-300 dark:text-slate-600">|</span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Punto: <strong>${actual.punto || "-"}</strong></span>
+              ${actual.subbloque ? `<span class="text-slate-300 dark:text-slate-600">|</span> <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Subbloque: <strong>${actual.subbloque}</strong></span>` : ''}
             </div>
             <div class="leading-relaxed text-slate-600 dark:text-slate-300">${actual.explicacion || "Sin explicación adicional."}</div>
           </div>
@@ -413,8 +419,10 @@
           </div>
         </div>
       `;
-      document.querySelector('.stats-header').style.display = 'none';
-      document.getElementById('header-title-container').style.display = 'none';
+      const statsHeader = document.querySelector('.stats-header');
+      if (statsHeader) statsHeader.style.display = 'none';
+      const headerTitle = document.getElementById('header-title-container');
+      if (headerTitle) headerTitle.style.display = 'none';
     }
 
     function mostrarError(msg) {

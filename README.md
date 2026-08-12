@@ -60,13 +60,14 @@ Las preguntas están almacenadas en formato JSON dentro de la carpeta `/Data`.
   "respuesta": "Establecer las exigencias de eficiencia energética y seguridad en las instalaciones térmicas.",
   "explicacion": "El Artículo 1 del RITE establece las exigencias técnicas de seguridad y eficiencia energética para el bienestar e higiene de las personas.",
   "bloque": "ARTICULADO",
+  "subbloque": "Capítulo I",
   "referencia": "Artículo 1",
   "punto": "1.1",
   "tema": "Disposiciones generales"
 }
 ```
 
-### Formato para Preguntas de Instrucciones Técnicas (Parte II)
+### Formato para Preguntas de Instrucciones Técnicas y Apéndices (Parte II)
 ```json
 {
   "id": "RITE-IT11-001",
@@ -80,20 +81,26 @@ Las preguntas están almacenadas en formato JSON dentro de la carpeta `/Data`.
   "respuesta": "Exigencia de bienestar e higiene.",
   "explicacion": "La IT 1.1 especifica los requisitos de calidad del aire interior (IDA), confort térmico y acústico.",
   "bloque": "IT-1.1",
-  "referencia": "IT 1.1",
-  "punto": "IT 1.1.1",
-  "tema": "Bienestar e higiene"
+  "subbloque": "IT-1.1.4.2",
+  "referencia": "IT 1.1.4.2",
+  "punto": "IT 1.1.4.2.2",
+  "tema": "Calidad del aire interior"
 }
 ```
 
 ### Identificadores de Bloque Normalizados
-- `ARTICULADO`
-- `IT-1.1`
-- `IT-1.2`
-- `IT-1.3`
-- `IT-2`
-- `IT-3`
-- `IT-4`
+- `ARTICULADO`: Parte I (Artículos 1 al 51)
+- `IT-1.1`: Exigencia de bienestar e higiene
+- `IT-1.2`: Exigencia de eficiencia energética
+- `IT-1.3`: Exigencia de seguridad
+- `IT-2`: Montaje y pruebas
+- `IT-3`: Mantenimiento y uso
+- `IT-4`: Inspección
+- `APENDICE-1`: Términos y definiciones
+- `APENDICE-2`: Normas de referencia
+- `APENDICE-3`: Conocimientos de instalaciones térmicas en edificios
+- `APENDICE-4`: Declaración responsable en régimen de establecimiento
+- `APENDICE-5`: Declaración responsable en régimen de libre prestación
 
 ---
 

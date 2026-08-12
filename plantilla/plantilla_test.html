@@ -259,6 +259,8 @@
         opciones: actual.opciones,
         correcta: actual.respuesta,
         elegida: seleccionUsuario,
+        bloque: actual.bloque,
+        subbloque: actual.subbloque || "-",
         referencia: actual.referencia || actual.bloque,
         punto: actual.punto || "-",
         explicacion: actual.explicacion || "Sin explicación adicional."
@@ -276,7 +278,11 @@
           </div>
           <div class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 text-xs text-slate-700 dark:text-slate-300 shadow-sm">
             <div class="flex flex-wrap items-center gap-2 mb-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-700">
-              <strong class="text-xs text-brand-600 dark:text-brand-400">${actual.referencia || actual.bloque}</strong>
+              <strong class="text-xs text-brand-600 dark:text-brand-400">Bloque: ${actual.bloque}</strong>
+              <span class="text-slate-300 dark:text-slate-600">|</span>
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Subbloque: <strong>${actual.subbloque || "-"}</strong></span>
+              <span class="text-slate-300 dark:text-slate-600">|</span>
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ref: <strong>${actual.referencia || actual.bloque}</strong></span>
               <span class="text-slate-300 dark:text-slate-600">|</span>
               <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Punto: <strong>${actual.punto || "-"}</strong></span>
             </div>
@@ -345,7 +351,7 @@
             <div class="mb-3 pl-1">${opcionesHTML}</div>
             <div class="text-xs bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
               <strong class="block mb-1 text-slate-800 dark:text-slate-200 text-[10px] uppercase tracking-wide">Explicación:</strong>
-              <span class="font-semibold text-brand-600 dark:text-brand-400">${h.referencia} | Pto: ${h.punto}</span><br>${h.explicacion}
+              <span class="font-semibold text-brand-600 dark:text-brand-400">Bloque: ${h.bloque} | Subbloque: ${h.subbloque} | Ref: ${h.referencia} | Pto: ${h.punto}</span><br>${h.explicacion}
             </div>
           </div>
         `;
@@ -381,8 +387,10 @@
           </div>
         </div>
       `;
-      document.querySelector('.stats-header').style.display = 'none';
-      document.getElementById('header-title-container').style.display = 'none';
+      const statsHeader = document.querySelector('.stats-header');
+      if (statsHeader) statsHeader.style.display = 'none';
+      const headerTitle = document.getElementById('header-title-container');
+      if (headerTitle) headerTitle.style.display = 'none';
     }
 
     function mostrarError(msg) {
