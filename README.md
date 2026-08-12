@@ -5,7 +5,7 @@
 El proyecto sigue una metodología de aprendizaje en 4 pasos:
 1. **Aprender a orientarse** en la normativa.
 2. **Estudiar el Articulado** (Parte I).
-3. **Practicar por Instrucciones Técnicas** (IT 1, IT 2, IT 3 e IT 4).
+3. **Practicar por Instrucciones Técnicas y Apéndices** (IT 1 a IT 4 y Apéndices 1 a 5).
 4. **Realizar Simulacros Globales de Examen**.
 
 ---
@@ -17,13 +17,12 @@ El proyecto sigue una metodología de aprendizaje en 4 pasos:
 ├── index.html                    # Página principal e itinerario en 4 pasos
 ├── orientacion.html              # Módulo 1: "Aprende a orientarte" + Ejercicio interactivo
 ├── Repasar_Articulado.html       # Módulo 2: Guía de Capítulos del Articulado (Cap. I - X)
-├── Repasar_IT_RITE.html          # Módulo 3: Desglose de Instrucciones Técnicas (IT 1.1 - IT 4)
+├── Repasar_IT_RITE.html          # Módulo 3: Desglose de Instrucciones Técnicas y Apéndices
 ├── Test_por_IT_RITE.html         # Menú de selección de Test por bloques
 ├── Test_completos_RITE.html      # Página de presentación del Simulacro RITE
 │
 ├── Data/
-│   ├── base_datos_rite.json          # Banco de datos para test por bloques
-│   └── base_datos_rite_examenes.json # Banco de datos para simulacros globales
+│   └── base_datos_rite.json      # Banco maestro unificado de preguntas (398 preguntas reales)
 │
 ├── plantilla/
 │   ├── plantilla_test.html       # Motor universal de ejecución de test por bloques
@@ -44,7 +43,7 @@ El proyecto sigue una metodología de aprendizaje en 4 pasos:
 
 ## 📝 Banco de Preguntas JSON
 
-Las preguntas están almacenadas en formato JSON dentro de la carpeta `/Data`.
+Las preguntas están almacenadas en formato JSON dentro de `Data/base_datos_rite.json`.
 
 ### Formato para Preguntas del Articulado (Parte I)
 ```json
@@ -89,7 +88,7 @@ Las preguntas están almacenadas en formato JSON dentro de la carpeta `/Data`.
 ```
 
 ### Identificadores de Bloque Normalizados
-- `ARTICULADO`: Parte I (Artículos 1 al 51)
+- `ARTICULADO`: Parte I (Artículos 1 al 47)
 - `IT-1.1`: Exigencia de bienestar e higiene
 - `IT-1.2`: Exigencia de eficiencia energética
 - `IT-1.3`: Exigencia de seguridad
@@ -122,32 +121,35 @@ const CONFIG_EXAMEN = {
   duracionMinutos: 90,
   notaMinima: 70,
   distribucion: {
-    "ARTICULADO": 8,
-    "IT-1.1": 6,
-    "IT-1.2": 8,
-    "IT-1.3": 6,
+    "ARTICULADO": 6,
+    "IT-1.1": 5,
+    "IT-1.2": 5,
+    "IT-1.3": 4,
     "IT-2": 4,
     "IT-3": 4,
-    "IT-4": 4
+    "IT-4": 4,
+    "APENDICE-1": 2,
+    "APENDICE-2": 2,
+    "APENDICE-3": 2,
+    "APENDICE-4": 1,
+    "APENDICE-5": 1
   }
 };
 ```
 
 ---
 
-## 🚀 Despliegue en Vercel
+## 🚀 Despliegue en GitHub Pages
 
-**APP-RITE** es una aplicación web puramente estática (HTML, CSS y JavaScript Vanilla). No requiere servidores backend ni bases de datos activas.
+**APP-RITE** es una aplicación web puramente estática (HTML, CSS y JavaScript Vanilla) publicada mediante **GitHub Pages**.
 
-### Pasos para desplegar:
-1. Sube el repositorio a GitHub (`https://github.com/darwinAlvarez89/RITE`).
-2. Entra en tu panel de [Vercel](https://vercel.com).
-3. Haz clic en **"Add New"** &rarr; **"Project"**.
-4. Selecciona tu repositorio `RITE`.
-5. En la configuración del proyecto, deja la opción por defecto (**Other / Plain HTML**).
-6. Pulsa **Deploy**.
-
-Vercel compilará e implementará el sitio de manera automática.
+### Configuración del Despliegue:
+- **Repositorio**: `https://github.com/darwinAlvarez89/RITE`
+- **GitHub Pages**:
+  - **Source**: Deploy from a branch
+  - **Branch**: `main`
+  - **Folder**: `/ (root)`
+- **URL de la Aplicación**: `https://darwinalvarez89.github.io/RITE/`
 
 ---
 

@@ -183,21 +183,13 @@
       }
 
       try {
-        // Cargar ambas bases de datos si existen
-        let todas = [];
-        try {
-          const rExamenes = await fetch('../Data/base_datos_rite_examenes.json');
-          if (rExamenes.ok) todas.push(...(await rExamenes.json()));
-        } catch (e) { console.warn("No se pudo cargar base_datos_rite_examenes.json", e); }
+        const resp = await fetch('../Data/base_datos_rite.json');
+        if (!resp.ok) throw new Error("No se pudo cargar la base de datos de preguntas.");
+        const todas = await resp.json();
 
-        try {
-          const rBase = await fetch('../Data/base_datos_rite.json');
-          if (rBase.ok) todas.push(...(await rBase.json()));
-        } catch (e) { console.warn("No se pudo cargar base_datos_rite.json", e); }
+        if (!todas || todas.length === 0) throw new Error("No hay preguntas disponibles en la base de datos.");
 
-        if (todas.length === 0) throw new Error("No hay preguntas disponibles en la base de datos.");
-
-        // Deduplicar
+        // Deduplicar por enunciado
         const unicas = todas.filter((pregunta, index, self) =>
           index === self.findIndex((t) => (t.pregunta === pregunta.pregunta))
         );
