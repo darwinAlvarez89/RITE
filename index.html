@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>APP-RITE | Test y preparación del Reglamento RITE (RD 1027/2007)</title>
+  <meta name="description" content="Plataforma educativa interactiva para estudiar y preparar el Reglamento de Instalaciones Térmicas en los Edificios (RITE). Orientación, articulado, IT 1 a IT 4 y simulacros oficiales." />
+  
+  <meta name="keywords" content="test RITE, examen RITE, preguntas RITE, Reglamento de Instalaciones Térmicas, carné RITE, instalador RITE, mantenedor RITE, IT RITE, Real Decreto 1027/2007" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- DOMINIO CANÓNICO (Modificar cuando se defina el dominio definitivo) -->
+  <link rel="canonical" href="https://app-rite.es/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="APP-RITE | Test y preparación del Reglamento RITE" />
+  <meta property="og:description" content="Domina el Reglamento de Instalaciones Térmicas en los Edificios paso a paso. Orientación normativa, test por IT y simulacros completos." />
+  <meta property="og:image" content="https://app-rite.es/img/og-image.png" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="APP-RITE | Test y preparación del Reglamento RITE" />
+  <meta name="twitter:description" content="Plataforma educativa para preparar el RITE en España." />
+
+  <!-- Schema.org EducationalApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalApplication",
+    "name": "APP-RITE",
+    "operatingSystem": "All",
+    "applicationCategory": "EducationalApplication",
+    "description": "Aplicación interactiva para preparar el Reglamento de Instalaciones Térmicas en los Edificios (RITE) en España.",
+    "educationalUse": "Estudio y preparación para carné de instalador y mantenedor RITE",
+    "inLanguage": "es"
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', 
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#017AEB',
+              700: '#0066c7',
+              900: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/theme.js"></script>
+</head>
+
+<body class="text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+  <!-- Background overlay structure -->
+  <div class="bg-custom-fixed">
+    <div class="bg-overlay-theme"></div>
+  </div>
+
+  <!-- Navigation bar -->
+  <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="bg-brand-600 text-white font-black rounded-xl w-10 h-10 flex items-center justify-center shadow-lg shadow-brand-600/30 group-hover:scale-105 transition-transform">
+            R
+          </div>
+          <span class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">APP-RITE</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <button id="theme-toggle" aria-label="Cambiar tema" class="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative z-10">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 text-xs font-semibold mb-6 border border-brand-200 dark:border-brand-800">
+      <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span> Real Decreto 1027/2007
+    </div>
+    
+    <h1 class="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight mb-6 drop-shadow-sm">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-blue-600 to-sky-500 dark:from-white dark:via-slate-200 dark:to-brand-400">
+        RITE
+      </span>
+    </h1>
+
+    <p class="max-w-2xl mx-auto text-xl md:text-2xl font-normal text-slate-700 dark:text-slate-300 mb-10 leading-relaxed">
+      Domina el <span class="font-bold text-brand-600 dark:text-brand-400 border-b-2 border-brand-600/30">Reglamento de Instalaciones Térmicas en los Edificios</span> paso a paso.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#preparacion" class="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded-xl text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-600/30 transition-all hover:-translate-y-0.5">
+        Empieza a estudiar
+      </a>
+      <a href="#que-es-rite" class="inline-flex items-center justify-center px-8 py-3.5 border border-slate-300 dark:border-slate-700 text-base font-medium rounded-xl text-slate-700 dark:text-slate-300 bg-white/70 dark:bg-slate-800/70 hover:bg-white dark:hover:bg-slate-700 transition-all backdrop-blur-sm">
+        Conoce el RITE
+      </a>
+    </div>
+  </header>
+
+  <!-- Sistema de Preparación (4 Pasos) -->
+  <section id="preparacion" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-4">Sistema de Preparación</h2>
+      <p class="text-slate-600 dark:text-slate-400 text-lg max-w-xl mx-auto">Un itinerario progresivo y estructurado para garantizar el aprendizaje técnico.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+      <!-- PASO 1 -->
+      <div class="glass-card rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-brand-500/50 transition-all group flex flex-col h-full">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-900/60 text-brand-600 dark:text-brand-400 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 transition-transform">
+          1
+        </div>
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">PASO 1</span>
+        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Aprende a orientarte</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed flex-1">
+          Antes de memorizar contenidos, aprende cómo está organizado el RITE y dónde localizar cada requisito.
+        </p>
+        <a href="orientacion.html" class="block w-full py-3 px-4 bg-slate-100 dark:bg-slate-800/80 text-brand-600 dark:text-brand-400 font-bold rounded-xl text-center hover:bg-brand-600 hover:text-white transition-colors mt-auto text-sm">
+          Aprender a orientarme &rarr;
+        </a>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="glass-card rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-brand-500/50 transition-all group flex flex-col h-full">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-900/60 text-brand-600 dark:text-brand-400 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 transition-transform">
+          2
+        </div>
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">PASO 2</span>
+        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Articulado</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed flex-1">
+          Estudia y practica las disposiciones generales, responsabilidades, documentación, puesta en servicio, mantenimiento, inspecciones y empresas habilitadas.
+        </p>
+        <a href="Repasar_Articulado.html" class="block w-full py-3 px-4 bg-slate-100 dark:bg-slate-800/80 text-brand-600 dark:text-brand-400 font-bold rounded-xl text-center hover:bg-brand-600 hover:text-white transition-colors mt-auto text-sm">
+          Estudiar Articulado &rarr;
+        </a>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="glass-card rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-brand-500/50 transition-all group flex flex-col h-full">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-900/60 text-brand-600 dark:text-brand-400 flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 transition-transform">
+          3
+        </div>
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">PASO 3</span>
+        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Instrucciones Técnicas</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 text-sm leading-relaxed flex-1">
+          Practica progresivamente las IT 1, IT 2, IT 3 e IT 4 y sus diferentes apartados normativos.
+        </p>
+        <a href="Repasar_IT_RITE.html" class="block w-full py-3 px-4 bg-slate-100 dark:bg-slate-800/80 text-brand-600 dark:text-brand-400 font-bold rounded-xl text-center hover:bg-brand-600 hover:text-white transition-colors mt-auto text-sm">
+          Practicar por IT &rarr;
+        </a>
+      </div>
+
+      <!-- PASO 4 (Fondo Azul Destacado) -->
+      <div class="card-featured rounded-2xl p-6 shadow-2xl hover:shadow-brand-600/30 transition-all group text-white flex flex-col h-full">
+        <div class="w-12 h-12 rounded-xl bg-white/20 text-white flex items-center justify-center font-black text-xl mb-6 group-hover:scale-110 transition-transform border border-white/20">
+          4
+        </div>
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-100 mb-1">PASO 4</span>
+        <h3 class="text-xl font-bold mb-3 text-white">Simulacro RITE</h3>
+        <p class="text-blue-100 mb-6 text-sm leading-relaxed flex-1">
+          Pon a prueba todo lo aprendido mediante exámenes aleatorios del Reglamento completo.
+        </p>
+        <a href="Test_completos_RITE.html" class="block w-full py-3 px-4 bg-white text-brand-700 font-extrabold rounded-xl text-center hover:bg-blue-50 transition-colors shadow-lg mt-auto text-sm">
+          Iniciar simulacro &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección ¿Qué es el RITE? -->
+  <section id="que-es-rite" class="py-16 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-8 text-center">Reglamento de Instalaciones Térmicas en los Edificios (RITE)</h2>
+      
+      <div class="space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed text-base">
+        <p>
+          El <strong>Reglamento de Instalaciones Térmicas en los Edificios (RITE)</strong>, aprobado mediante el <strong>Real Decreto 1027/2007, de 20 de julio</strong>, establece las exigencias de eficiencia energética y de seguridad que deben cumplir las instalaciones térmicas destinadas a atender la demanda de bienestar e higiene de las personas (calefacción, climatización, agua caliente sanitaria y ventilación).
+        </p>
+
+        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+          <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400 mb-3">Estructura del RITE</h3>
+          <p class="mb-3">El RITE se organiza de manera clara en dos grandes partes complementarias:</p>
+          
+          <div class="space-y-4 text-sm">
+            <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <strong class="text-slate-900 dark:text-white font-bold block mb-1">Parte I — Disposiciones Generales (Artículos 1 a 47)</strong>
+              <p class="text-slate-500 dark:text-slate-400">Contiene el marco legal, las exigencias técnicas generales, condiciones administrativas, ejecución, puesta en servicio, uso, mantenimiento, inspección, empresas habilitadas, régimen sancionador y Comisión Asesora.</p>
+            </div>
+            
+            <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+              <strong class="text-slate-900 dark:text-white font-bold block mb-1">Parte II — Instrucciones Técnicas (IT)</strong>
+              <p class="text-slate-500 dark:text-slate-400 mb-2">Desarrolla las especificaciones técnicas concretas divididas en cuatro grandes bloques:</p>
+              <ul class="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">
+                <li><strong>IT 1 — Diseño y dimensionado:</strong> dividida en IT 1.1 (Bienestar e higiene), IT 1.2 (Eficiencia energética) e IT 1.3 (Seguridad).</li>
+                <li><strong>IT 2 — Montaje:</strong> condiciones de ejecución, pruebas de estanquidad, redes de conductos, chimeneas, equilibrado y control.</li>
+                <li><strong>IT 3 — Mantenimiento y uso:</strong> programas de mantenimiento preventivo, gestión energética y manuales de maniobra.</li>
+                <li><strong>IT 4 — Inspección:</strong> inspecciones periódicas de eficiencia energética y seguridad.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enlace oficial al BOE -->
+        <div class="pt-4 flex justify-center">
+          <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-15820" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-brand-600 dark:text-brand-400 font-bold hover:bg-brand-50 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700 text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            Consultar Texto Consolidado Oficial en el BOE
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white/90 dark:bg-slate-950/90 backdrop-blur border-t border-slate-200 dark:border-slate-800 py-10 mt-auto relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+      <div>
+        © <span id="year"></span> <strong>APP-RITE</strong> — Preparación del Reglamento de Instalaciones Térmicas en los Edificios.
+      </div>
+      <div class="flex gap-6 font-medium">
+        <a href="index.html" class="hover:text-brand-600 transition-colors">Inicio</a>
+        <a href="orientacion.html" class="hover:text-brand-600 transition-colors">Orientación</a>
+        <a href="Test_por_IT_RITE.html" class="hover:text-brand-600 transition-colors">Test por IT</a>
+        <a href="Test_completos_RITE.html" class="hover:text-brand-600 transition-colors">Simulacro</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

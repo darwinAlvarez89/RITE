@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Simulacro Examen RITE</title>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Tailwind CSS & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', 
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#017AEB',
+              700: '#0066c7',
+              900: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <script src="../js/theme.js"></script>
+  <script src="../js/utils.js"></script>
+
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+    }
+
+    button { -webkit-tap-highlight-color: transparent; user-select: none; }
+  </style>
+
+  <script>
+    /* ============================================================
+       CONFIGURACIÓN CENTRALIZADA DEL SIMULACRO RITE
+       ============================================================ */
+    const CONFIG_EXAMEN = {
+      totalPreguntas: 40,
+      duracionMinutos: 90,
+      notaMinima: 70, // 70% de aciertos para considerar APTO
+      distribucion: {
+        "ARTICULADO": 8,
+        "IT-1.1": 6,
+        "IT-1.2": 8,
+        "IT-1.3": 6,
+        "IT-2": 4,
+        "IT-3": 4,
+        "IT-4": 4
+      }
+    };
+
+    /* ===== ESTADO DEL SIMULACRO ===== */
+    let preguntasDelExamen = [];
+    let indice = 0, aciertos = 0, errores = 0;
+    let historial = [];
+    let seleccionUsuario = null;
+    let respondido = false;
+    let inicioTiempo = null;
+    let intervaloTiempo = null;
+    let tiempoAgotado = false;
+    const STORAGE_KEY = 'rite_exam_sim_state';
+
+    // Persistencia LocalStorage
+    function guardarProgreso() {
+      const estado = { preguntasDelExamen, indice, aciertos, errores, historial, inicioTiempo, respondido, seleccionUsuario };
+      StorageUtil.save(STORAGE_KEY, estado);
+    }
+
+    function borrarProgreso() {
+      StorageUtil.remove(STORAGE_KEY);
+    }
+
+    function cancelarYSalir() {
+      borrarProgreso();
+      window.location.href = '../Test_completos_RITE.html';
+    }
+
+    function cargarProgreso() {
+      const estado = StorageUtil.load(STORAGE_KEY);
+      if (estado && estado.preguntasDelExamen && estado.preguntasDelExamen.length === CONFIG_EXAMEN.totalPreguntas && estado.indice < estado.preguntasDelExamen.length) {
+        preguntasDelExamen = estado.preguntasDelExamen;
+        indice = estado.indice;
+        aciertos = estado.aciertos;
+        errores = estado.errores;
+        historial = estado.historial;
+        inicioTiempo = estado.inicioTiempo;
+        respondido = false; 
+        seleccionUsuario = null;
+        return true;
+      }
+      return false;
+    }
+
+    // Efecto Confeti
+    function lanzarFuegosArtificiales() {
+      var duration = 3 * 1000;
+      var animationEnd = Date.now() + duration;
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+      function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+      var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) { return clearInterval(interval); }
+        var particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+
+    /* Generación del Examen basada en la Configuración */
+    function generarExamen(todasLasPreguntas) {
+      const examenGenerado = [];
+      const usados = new Set();
+
+      // Recorremos cada bloque configurado y extraemos su cuota
+      for (const [bloque, cuota] of Object.entries(CONFIG_EXAMEN.distribucion)) {
+        const pool = todasLasPreguntas.filter(p => {
+          if (usados.has(p.pregunta)) return false;
+          const blk = normalizeBlockId(p.bloque);
+          const targetBlk = normalizeBlockId(bloque);
+          return blk.includes(targetBlk);
+        });
+
+        const seleccionadas = shuffleArray(pool).slice(0, cuota);
+        seleccionadas.forEach(p => {
+          usados.add(p.pregunta);
+          examenGenerado.push(p);
+        });
+      }
+
+      // Si no se alcanza la cuota total, completamos con el resto de preguntas disponibles
+      if (examenGenerado.length < CONFIG_EXAMEN.totalPreguntas) {
+        const remanentes = todasLasPreguntas.filter(p => !usados.has(p.pregunta));
+        const faltantes = CONFIG_EXAMEN.totalPreguntas - examenGenerado.length;
+        const extra = shuffleArray(remanentes).slice(0, faltantes);
+        examenGenerado.push(...extra);
+      }
+
+      // Mezcla final del orden del examen y de las opciones de cada pregunta
+      const examenFinal = shuffleArray(examenGenerado).map(p => ({
+        ...p,
+        opciones: shuffleArray(p.opciones)
+      }));
+
+      return examenFinal;
+    }
+
+    // Inicialización del Simulacro
+    async function iniciarAplicacion() {
+      if (cargarProgreso()) {
+        cargarPregunta();
+        intervaloTiempo = setInterval(actualizarEstado, 1000);
+        document.addEventListener('keydown', handleKey);
+        return;
+      }
+
+      try {
+        // Cargar ambas bases de datos si existen
+        let todas = [];
+        try {
+          const rExamenes = await fetch('../Data/base_datos_rite_examenes.json');
+          if (rExamenes.ok) todas.push(...(await rExamenes.json()));
+        } catch (e) { console.warn("No se pudo cargar base_datos_rite_examenes.json", e); }
+
+        try {
+          const rBase = await fetch('../Data/base_datos_rite.json');
+          if (rBase.ok) todas.push(...(await rBase.json()));
+        } catch (e) { console.warn("No se pudo cargar base_datos_rite.json", e); }
+
+        if (todas.length === 0) throw new Error("No hay preguntas disponibles en la base de datos.");
+
+        // Deduplicar
+        const unicas = todas.filter((pregunta, index, self) =>
+          index === self.findIndex((t) => (t.pregunta === pregunta.pregunta))
+        );
+
+        preguntasDelExamen = generarExamen(unicas);
+
+        inicioTiempo = Date.now();
+        guardarProgreso();
+        cargarPregunta();
+        intervaloTiempo = setInterval(actualizarEstado, 1000);
+        document.addEventListener('keydown', handleKey);
+
+      } catch (e) { 
+        console.error(e);
+        mostrarError("Error cargando el simulacro: " + e.message); 
+      }
+    }
+
+    // Render de Pregunta
+    function cargarPregunta() {
+      if (indice >= preguntasDelExamen.length) return finalizarTest();
+
+      const q = preguntasDelExamen[indice];
+      seleccionUsuario = null; respondido = false;
+
+      document.getElementById("block-title").textContent = `SIMULACRO RITE — ${q.bloque || 'GENERAL'}`;
+      document.getElementById("texto-pregunta").textContent = q.pregunta;
+
+      const cont = document.getElementById("contenedor-opciones");
+      cont.innerHTML = "";
+
+      q.opciones.forEach((op, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-brand-300 transition-all text-sm font-medium text-slate-700 dark:text-slate-200 flex items-start gap-3 shadow-sm active:scale-[0.99]";
+        btn.dataset.valor = op;
+        btn.onclick = () => seleccionarOpcion(op);
+        btn.innerHTML = `<span class="leading-snug">${op}</span>`;
+        cont.appendChild(btn);
+      });
+
+      document.getElementById("area-acciones").innerHTML = `
+        <div class="flex justify-end mt-2">
+          <button id="btn-accion" type="button" disabled onclick="verificarRespuesta()" 
+            class="px-6 py-2.5 rounded-xl font-bold text-white bg-slate-300 dark:bg-slate-800 cursor-not-allowed transition-all shadow-none text-xs tracking-wide uppercase">
+            Contestar
+          </button>
+        </div>
+      `;
+
+      guardarProgreso();
+      document.getElementById("main-card").scrollTop = 0;
+      actualizarEstado();
+    }
+
+    function seleccionarOpcion(opcion) {
+      if (respondido || tiempoAgotado) return;
+      seleccionUsuario = opcion;
+
+      document.querySelectorAll("#contenedor-opciones button").forEach(b => {
+        if (b.dataset.valor === opcion) {
+          b.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border-2 border-brand-600 bg-brand-50/60 dark:bg-brand-950/40 text-brand-900 dark:text-brand-200 font-semibold flex items-start gap-3 shadow-sm transform scale-[1.01] transition-all text-sm";
+        } else {
+          b.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 opacity-60 hover:opacity-100 transition-all text-slate-600 dark:text-slate-400 flex items-start gap-3 text-sm";
+        }
+      });
+
+      const btn = document.getElementById('btn-accion');
+      btn.disabled = false;
+      btn.className = "px-6 py-2.5 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-md hover:shadow-lg transition-all transform active:scale-[0.98] text-xs tracking-wide uppercase";
+    }
+
+    function verificarRespuesta() {
+      if (respondido || !seleccionUsuario) return;
+      respondido = true;
+      const actual = preguntasDelExamen[indice];
+      const esCorrecta = seleccionUsuario === actual.respuesta;
+
+      document.querySelectorAll("#contenedor-opciones button").forEach(b => {
+        b.disabled = true;
+        const val = b.dataset.valor;
+        if (val === actual.respuesta) {
+          b.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-semibold flex items-start gap-3 shadow-sm text-sm";
+        } else if (val === seleccionUsuario && !esCorrecta) {
+          b.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border-2 border-red-500 bg-red-50 dark:bg-red-950/40 text-red-900 dark:text-red-200 font-semibold flex items-start gap-3 shadow-sm text-sm";
+        } else {
+          b.className = "w-full text-left py-3 px-4 mb-2.5 rounded-xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-slate-900 opacity-40 text-slate-400 flex items-start gap-3 text-sm";
+        }
+      });
+
+      if (esCorrecta) aciertos++; else errores++;
+      
+      historial.push({
+        pregunta: actual.pregunta,
+        opciones: actual.opciones,
+        correcta: actual.respuesta,
+        elegida: seleccionUsuario,
+        referencia: actual.referencia || actual.bloque,
+        punto: actual.punto || "-",
+        explicacion: actual.explicacion || "Sin explicación adicional."
+      });
+      guardarProgreso();
+
+      document.getElementById("area-acciones").innerHTML = `
+        <div class="fade-in w-full mt-2">
+          <div class="flex justify-end mb-3">
+            <button id="btn-siguiente" type="button" onclick="siguientePregunta()" 
+              class="px-6 py-2.5 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg transition-all flex items-center justify-center gap-2 text-xs tracking-wide uppercase btn-pulse">
+              Siguiente Pregunta
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+            </button>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl p-3.5 text-xs text-slate-700 dark:text-slate-300 shadow-sm">
+            <div class="flex flex-wrap items-center gap-2 mb-1.5 pb-1.5 border-b border-slate-200 dark:border-slate-700">
+              <strong class="text-xs text-brand-600 dark:text-brand-400">${actual.referencia || actual.bloque}</strong>
+              <span class="text-slate-300 dark:text-slate-600">|</span>
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Punto: <strong>${actual.punto || "-"}</strong></span>
+            </div>
+            <div class="leading-relaxed text-slate-600 dark:text-slate-300">${actual.explicacion || "Sin explicación adicional."}</div>
+          </div>
+        </div>
+      `;
+
+      const btnSig = document.getElementById('btn-siguiente');
+      btnSig.focus();
+      actualizarEstado();
+    }
+
+    const siguientePregunta = () => { if (!tiempoAgotado) { indice++; cargarPregunta(); } };
+
+    function actualizarEstado() {
+      if (!inicioTiempo) return;
+      const total = preguntasDelExamen.length;
+      const duracionSeg = CONFIG_EXAMEN.duracionMinutos * 60;
+      const transcurrido = Math.floor((Date.now() - inicioTiempo) / 1000);
+      const restantes = Math.max(0, duracionSeg - transcurrido);
+      const pct = total > 0 ? (indice / total) * 100 : 0;
+      
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+      document.getElementById('stats-cuestion').innerText = `${Math.min(indice + 1, total)}/${total}`;
+      document.getElementById('stats-aciertos').innerText = aciertos;
+      document.getElementById('stats-fallos').innerText = errores;
+      document.getElementById('timer-display').innerText = formatTime(restantes);
+
+      if (restantes === 0 && !tiempoAgotado) {
+        tiempoAgotado = true;
+        clearInterval(intervaloTiempo);
+        finalizarTest();
+      }
+    }
+
+    function finalizarTest() {
+      clearInterval(intervaloTiempo);
+      borrarProgreso();
+      const total = preguntasDelExamen.length;
+      const porcentaje = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+      const apto = porcentaje >= CONFIG_EXAMEN.notaMinima;
+
+      if (apto) lanzarFuegosArtificiales();
+
+      const htmlHistorial = historial.map((h, i) => {
+        const opcionesHTML = h.opciones.map(op => {
+          let clase = "text-slate-400 border-slate-100 bg-white dark:bg-slate-900 dark:border-slate-800";
+          let icon = "";
+          if (op === h.correcta) {
+            clase = "text-emerald-700 bg-emerald-50 border-emerald-200 dark:bg-emerald-950/40 dark:border-emerald-800 font-medium";
+            icon = "✅";
+          } else if (op === h.elegida && op !== h.correcta) {
+            clase = "text-red-700 bg-red-50 border-red-200 dark:bg-red-950/40 dark:border-red-800 line-through decoration-red-400";
+            icon = "❌";
+          }
+          return `<div class="text-xs p-2 rounded-lg border ${clase} flex justify-between items-center mb-1"><span>${op}</span><span>${icon}</span></div>`;
+        }).join('');
+
+        return `
+          <div class="mb-5 pb-4 border-b border-slate-100 dark:border-slate-800 last:border-0">
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-[10px] font-bold text-slate-400 uppercase bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">#${i+1}</span>
+              <span class="text-[10px] font-bold ${h.correcta === h.elegida ? 'text-emerald-600' : 'text-red-600'}">${h.correcta === h.elegida ? 'CORRECTA' : 'INCORRECTA'}</span>
+            </div>
+            <p class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3 leading-snug">${h.pregunta}</p>
+            <div class="mb-3 pl-1">${opcionesHTML}</div>
+            <div class="text-xs bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
+              <strong class="block mb-1 text-slate-800 dark:text-slate-200 text-[10px] uppercase tracking-wide">Explicación:</strong>
+              <span class="font-semibold text-brand-600 dark:text-brand-400">${h.referencia} | Pto: ${h.punto}</span><br>${h.explicacion}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const iconoFinal = apto ? '🎉' : '💪';
+      const tituloFinal = apto ? '¡SIMULACRO APROBADO!' : '¡NO APTO EN EL SIMULACRO!';
+      const animacionIcono = apto ? '' : 'animate-heartbeat';
+      const subtituloFinal = apto ? '¡Excelente! Has superado el examen global del RITE.' : 'Sigue practicando los bloques individuales para consolidar tu resultado.';
+
+      document.getElementById('contenedor-test').innerHTML = `
+        <div class="text-center py-6 fade-in">
+          <div class="inline-block p-4 rounded-full ${apto ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60' : 'bg-red-50 text-red-600 dark:bg-red-950/60'} mb-3 shadow-sm ${animacionIcono}">
+            <span class="text-4xl block">${iconoFinal}</span>
+          </div>
+          <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-1">${tituloFinal}</h2>
+          <p class="text-slate-500 text-xs mb-2">${subtituloFinal}</p>
+          <p class="text-slate-600 dark:text-slate-300 text-base mb-6">Puntuación Final: <strong class="text-brand-600 dark:text-brand-400 text-xl font-black">${porcentaje}%</strong> aciertos <span class="text-xs text-slate-400 block mt-1">(Nota de referencia provisional: ${CONFIG_EXAMEN.notaMinima}%)</span></p>
+          
+          <div class="flex justify-center gap-3 mb-8">
+            <div class="text-center w-24 p-3 rounded-xl border border-emerald-100 bg-emerald-50 dark:bg-emerald-950/40 dark:border-emerald-900"><div class="text-xl font-black text-emerald-600">${aciertos}</div><div class="text-[10px] uppercase font-bold text-emerald-700/80">Aciertos</div></div>
+            <div class="text-center w-24 p-3 rounded-xl border border-red-100 bg-red-50 dark:bg-red-950/40 dark:border-red-900"><div class="text-xl font-black text-red-600">${errores}</div><div class="text-[10px] uppercase font-bold text-red-700/80">Fallos</div></div>
+          </div>
+
+          <div class="flex gap-3 mb-8">
+            <button type="button" onclick="borrarProgreso(); location.reload()" class="flex-1 py-3.5 bg-brand-600 text-white rounded-xl font-bold shadow-md hover:bg-brand-700 transition-all text-sm">Nuevo Simulacro</button>
+            <a href="../Test_completos_RITE.html" class="flex-1 py-3.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-sm flex items-center justify-center">Menú de Simulacros</a>
+          </div>
+
+          <div class="text-left border-t border-slate-100 dark:border-slate-800 pt-6">
+            <h3 class="font-bold text-slate-400 text-xs uppercase mb-4 tracking-widest text-center">Revisión Completa del Examen</h3>
+            <div class="max-h-96 overflow-y-auto pr-1 hide-scroll">${htmlHistorial}</div>
+          </div>
+        </div>
+      `;
+      document.querySelector('.stats-header').style.display = 'none';
+      document.getElementById('header-title-container').style.display = 'none';
+    }
+
+    function mostrarError(msg) {
+      document.getElementById('contenedor-test').innerHTML = `
+        <div class="text-center py-10 text-red-500 text-sm font-medium">
+          ${msg}<br>
+          <a href="../Test_completos_RITE.html" class="underline mt-3 block text-slate-500 hover:text-brand-600">Volver al Menú de Simulacros</a>
+        </div>
+      `;
+    }
+
+    function handleKey(e) {
+      if (tiempoAgotado) return;
+      if (e.key === 'Enter') {
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        const btnAccion = document.getElementById('btn-accion');
+        if (btnSiguiente) {
+          btnSiguiente.click();
+        } else if (btnAccion && !btnAccion.disabled) {
+          btnAccion.click();
+        }
+      }
+      const map = {'1':0,'2':1,'3':2,'4':3};
+      if (map[e.key] !== undefined && !respondido) {
+        const btns = document.querySelectorAll('#contenedor-opciones button');
+        if (btns[map[e.key]]) btns[map[e.key]].click();
+      }
+    }
+
+    window.onload = iniciarAplicacion;
+  </script>
+</head>
+
+<body class="text-slate-900 dark:text-slate-100 transition-colors duration-300">
+  <div class="bg-custom-fixed">
+    <div class="bg-overlay-theme"></div>
+  </div>
+
+  <main id="main-card" class="w-full max-w-3xl glass-card rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 border-t-[6px] border-t-brand-600 flex flex-col relative max-h-[92vh]">
+    
+    <!-- Encabezado de estado -->
+    <header class="stats-header px-5 py-3 border-b border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex-shrink-0 flex justify-between items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+      <div>Pregunta: <strong class="text-slate-900 dark:text-white" id="stats-cuestion">0/0</strong></div>
+      <div class="flex items-center gap-4">
+        <span class="text-emerald-600 dark:text-emerald-400">Aciertos: <strong id="stats-aciertos">0</strong></span>
+        <span class="text-red-600 dark:text-red-400">Fallos: <strong id="stats-fallos">0</strong></span>
+        <span class="text-amber-600 dark:text-amber-400 font-mono font-bold" id="timer-display">00:00</span>
+        <button id="theme-toggle" type="button" aria-label="Cambiar tema" class="p-1 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+          <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+          <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Barra de progreso -->
+    <div class="w-full h-1 bg-slate-100 dark:bg-slate-800 flex-shrink-0">
+      <div id="progress-bar" class="h-full bg-brand-600 transition-all duration-300 rounded-r-full" style="width: 0%"></div>
+    </div>
+    
+    <!-- Contenedor del Test -->
+    <div id="contenedor-test" class="p-5 md:p-6 overflow-y-auto hide-scroll flex-1 relative">
+      <div id="header-title-container" class="text-center mb-4">
+        <h1 id="block-title" class="text-base font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">CARGANDO SIMULACRO...</h1>
+      </div>
+      <div id="texto-pregunta" class="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-5">...</div>
+      <div id="contenedor-opciones" class="mb-3"></div>
+      <div id="area-acciones" class="mt-4 pb-2"></div>
+    </div>
+  </main>
+  
+  <!-- Botón Cancelar -->
+  <div class="mt-4">
+    <button type="button" onclick="cancelarYSalir()" class="px-6 py-2 bg-slate-700 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition-all">
+      Cancelar y Salir
+    </button>
+  </div>
+</body>
+</html>

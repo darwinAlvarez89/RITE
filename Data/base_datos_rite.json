@@ -1,0 +1,178 @@
+[
+  {
+    "id": "RITE-ART-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Cuál es el objeto principal del RITE según la Parte I del Real Decreto 1027/2007?",
+    "opciones": [
+      "Establecer las exigencias de eficiencia energética y seguridad en las instalaciones térmicas.",
+      "Regular exclusivamente los precios de los combustibles calefactores.",
+      "Definir el marco de tarifas de las distribuidoras eléctricas.",
+      "Fijar únicamente los requisitos de prevención de riesgos en obra."
+    ],
+    "respuesta": "Establecer las exigencias de eficiencia energética y seguridad en las instalaciones térmicas.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. El Artículo 1 del RITE establece las exigencias técnicas de seguridad y eficiencia energética para el bienestar e higiene de las personas.",
+    "bloque": "ARTICULADO",
+    "referencia": "Artículo 1",
+    "punto": "1.1",
+    "tema": "Disposiciones generales"
+  },
+  {
+    "id": "RITE-ART-002",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] Según el Capítulo III del RITE (Artículos 14-18), ¿qué instalaciones requieren proyecto técnico?",
+    "opciones": [
+      "Las instalaciones térmicas cuya potencia térmica nominal en generación de calor o frío sea mayor que la especificada normativamente.",
+      "Cualquier estufa eléctrica independientemente de su potencia.",
+      "Únicamente los aparatos de aire acondicionado portátiles.",
+      "Solo las instalaciones industriales no destinadas al bienestar humano."
+    ],
+    "respuesta": "Las instalaciones térmicas cuya potencia térmica nominal en generación de calor o frío sea mayor que la especificada normativamente.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. El Artículo 15 regula la documentación técnica de diseño y la exigencia de Proyecto o Memoria Técnica según la potencia nominal.",
+    "bloque": "ARTICULADO",
+    "referencia": "Artículo 15",
+    "punto": "15.1",
+    "tema": "Documentación técnica"
+  },
+  {
+    "id": "RITE-ART-003",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Quién es el responsable del uso, mantenimiento e inspecciones periódicas de la instalación según el Artículo 25?",
+    "opciones": [
+      "El titular o usuario de la instalación térmica.",
+      "Exclusivamente el fabricante de la caldera.",
+      "El ayuntamiento de la localidad.",
+      "El distribuidor de gas o electricidad."
+    ],
+    "respuesta": "El titular o usuario de la instalación térmica.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. El Artículo 25 atribuye al titular de la instalación la responsabilidad sobre su mantenimiento, conservación e inspección.",
+    "bloque": "ARTICULADO",
+    "referencia": "Artículo 25",
+    "punto": "25.1",
+    "tema": "Uso y mantenimiento"
+  },
+  {
+    "id": "RITE-IT11-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Qué exigencia reglamentaria desarrolla la IT 1.1 de la Parte II del RITE?",
+    "opciones": [
+      "Exigencia de bienestar e higiene.",
+      "Exigencia de inspecciones de calderas.",
+      "Exigencia de régimen sancionador.",
+      "Exigencia de carné de mantenedor."
+    ],
+    "respuesta": "Exigencia de bienestar e higiene.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 1.1 especifica los requisitos de calidad del aire interior, confort térmico y acústico.",
+    "bloque": "IT-1.1",
+    "referencia": "IT 1.1",
+    "punto": "IT 1.1.1",
+    "tema": "Bienestar e higiene"
+  },
+  {
+    "id": "RITE-IT11-002",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] En el diseño de ventilación según IT 1.1, ¿qué parámetro mide la calidad del aire interior (IDA)?",
+    "opciones": [
+      "La categoría IDA (IDA 1 a IDA 4) según el uso del local.",
+      "El voltaje nominal de los extractor de aire.",
+      "El índice de aislamiento térmico de paredes.",
+      "La resistencia al fuego de las tuberías de agua."
+    ],
+    "respuesta": "La categoría IDA (IDA 1 a IDA 4) según el uso del local.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 1.1 clasifica la calidad del aire interior en categorías IDA según la actividad desarrollada en el edificio.",
+    "bloque": "IT-1.1",
+    "referencia": "IT 1.1.4.2",
+    "punto": "IT 1.1.4.2.2",
+    "tema": "Calidad del aire interior"
+  },
+  {
+    "id": "RITE-IT12-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Cuál es el objetivo primordial de la IT 1.2 del RITE?",
+    "opciones": [
+      "Garantizar la eficiencia energética y el rendimiento de los equipos.",
+      "Normar los requisitos de carné profesional de instalador.",
+      "Fijar los plazos de inspección obligatoria de ascensores.",
+      "Clasificar los tipos de extintores de incendio."
+    ],
+    "respuesta": "Garantizar la eficiencia energética y el rendimiento de los equipos.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 1.2 regula la eficiencia energética, aislamiento térmico, contabilización de consumos y aprovechamiento de energías renovables.",
+    "bloque": "IT-1.2",
+    "referencia": "IT 1.2",
+    "punto": "IT 1.2.1",
+    "tema": "Eficiencia energética"
+  },
+  {
+    "id": "RITE-IT12-002",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] Según la IT 1.2, ¿qué medida favorece la reducción de consumo energético en redes de distribución?",
+    "opciones": [
+      "El aislamiento térmico adecuado de tuberías y conductos de fluidos térmicos.",
+      "Aumentar el diámetro de los conductos sin aislar.",
+      "Aumentar permanentemente la temperatura de impulsión sin control.",
+      "Eliminar los purgadores de aire del circuito."
+    ],
+    "respuesta": "El aislamiento térmico adecuado de tuberías y conductos de fluidos térmicos.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. El aislamiento térmico en redes de fluidos minimiza las pérdidas o ganancias de calor no deseadas.",
+    "bloque": "IT-1.2",
+    "referencia": "IT 1.2.4.2",
+    "punto": "IT 1.2.4.2.1",
+    "tema": "Aislamiento térmico"
+  },
+  {
+    "id": "RITE-IT13-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] La IT 1.3 aborda la exigencia de:",
+    "opciones": [
+      "Seguridad en las instalaciones térmicas.",
+      "Recaudación de tasas administrativas.",
+      "Redacción del estatuto de la Comisión Asesora.",
+      "Periodicidad de las auditorías energéticas externas."
+    ],
+    "respuesta": "Seguridad en las instalaciones térmicas.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 1.3 fija los criterios de seguridad de personas y bienes (presión, temperatura, protección contra quemaduras, chimeneas).",
+    "bloque": "IT-1.3",
+    "referencia": "IT 1.3",
+    "punto": "IT 1.3.1",
+    "tema": "Seguridad"
+  },
+  {
+    "id": "RITE-IT2-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Qué apartado de la IT 2 regula la realización de pruebas de estanquidad y pruebas finales?",
+    "opciones": [
+      "IT 2 — Montaje y Pruebas.",
+      "IT 1.1 — Bienestar térmico.",
+      "Capítulo IX — Régimen sancionador.",
+      "Apéndice 1 — Términos y definiciones."
+    ],
+    "respuesta": "IT 2 — Montaje y Pruebas.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 2 especifica las condiciones de montaje, pruebas de estanquidad, ajuste, equilibrado y recepción de instalaciones.",
+    "bloque": "IT-2",
+    "referencia": "IT 2",
+    "punto": "IT 2.2",
+    "tema": "Montaje y Pruebas"
+  },
+  {
+    "id": "RITE-IT3-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Qué documento obligatorio prevé la IT 3 para la conservación y mantenimiento preventivo?",
+    "opciones": [
+      "Programa de mantenimiento preventivo y manual de uso.",
+      "Proyecto de ejecución arquitectónico.",
+      "Boletín de instalación de baja tensión.",
+      "Licencia municipal de actividad comercial."
+    ],
+    "respuesta": "Programa de mantenimiento preventivo y manual de uso.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 3 exige disponer de un programa de mantenimiento preventivo y de gestión energética formalizado.",
+    "bloque": "IT-3",
+    "referencia": "IT 3",
+    "punto": "IT 3.3",
+    "tema": "Mantenimiento y uso"
+  },
+  {
+    "id": "RITE-IT4-001",
+    "pregunta": "[PREGUNTA DE PRUEBA — NO UTILIZAR EN PRODUCCIÓN] ¿Qué aspecto regula la IT 4 de la Parte II del RITE?",
+    "opciones": [
+      "Las inspecciones periódicas de las instalaciones térmicas.",
+      "La fabricación de radiadores de aluminio.",
+      "Los estatutos de asociaciones de consumidores.",
+      "El diseño de circuitos impresos de control."
+    ],
+    "respuesta": "Las inspecciones periódicas de las instalaciones térmicas.",
+    "explicacion": "TODO: incorporar contenido verificado del RITE. La IT 4 norma la periodicidad, procedimiento y alcance de las inspecciones técnicas periódicas de eficiencia energética y seguridad.",
+    "bloque": "IT-4",
+    "referencia": "IT 4",
+    "punto": "IT 4.1",
+    "tema": "Inspección"
+  }
+]

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>Test por IT y Articulado del RITE | APP-RITE</title>
+  <meta name="description" content="Selecciona un tema del RITE para practicar bloques de 20 preguntas (Articulado, IT 1.1, IT 1.2, IT 1.3, IT 2, IT 3 e IT 4)." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', 
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#017AEB',
+              700: '#0066c7',
+              900: '#0f172a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+
+<body class="text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+  <!-- Background overlay -->
+  <div class="bg-custom-fixed">
+    <div class="bg-overlay-theme"></div>
+  </div>
+
+  <!-- Navigation bar -->
+  <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="bg-brand-600 text-white font-black rounded-xl w-10 h-10 flex items-center justify-center shadow-lg shadow-brand-600/30 group-hover:scale-105 transition-transform">
+            R
+          </div>
+          <span class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">APP-RITE</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400">
+            &larr; Volver al Inicio
+          </a>
+          <button id="theme-toggle" aria-label="Cambiar tema" class="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors">
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative z-10">
+    <span class="inline-block px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-wider mb-4 border border-brand-200 dark:border-brand-800">
+      ENTRENAMIENTO POR TEMAS
+    </span>
+    <h1 class="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+      Test por Bloques RITE
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+      Selecciona el módulo normativo que deseas practicar. Cada sesión contiene 20 preguntas aleatorias con corrección instantánea y explicaciones.
+    </p>
+  </header>
+
+  <!-- Grid de Tarjetas Compactas de Test -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mb-16 relative z-10">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- TARJETA ARTICULADO -->
+      <a href="plantilla/plantilla_test.html?id=ARTICULADO" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-extrabold">
+              ARTICULADO
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Disposiciones Generales (Art. 1-47)
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Principios generales, exigencias, condiciones administrativas, puesta en servicio e inspecciones.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 1.1 -->
+      <a href="plantilla/plantilla_test.html?id=IT-1.1" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+              IT 1.1
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Bienestar e Higiene
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Calidad del aire interior (IDA), ventilación, ambiente térmico, filtración e higiene.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 1.2 -->
+      <a href="plantilla/plantilla_test.html?id=IT-1.2" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+              IT 1.2
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Eficiencia Energética
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Rendimiento de equipos, aislamiento térmico, regulación, contabilización y energías renovables.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 1.3 -->
+      <a href="plantilla/plantilla_test.html?id=IT-1.3" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold">
+              IT 1.3
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Seguridad
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Presión, temperatura, protección contra quemaduras, chimeneas y seguridad en salas de máquinas.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 2 -->
+      <a href="plantilla/plantilla_test.html?id=IT-2" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 text-xs font-extrabold">
+              IT 2
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Montaje y Pruebas
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Ejecución en obra, pruebas de estanquidad, conductos, chimeneas, ajuste y equilibrado.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 3 -->
+      <a href="plantilla/plantilla_test.html?id=IT-3" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 text-xs font-extrabold">
+              IT 3
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Mantenimiento y Uso
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Mantenimiento preventivo, programa de gestión energética, instrucciones de maniobra y uso.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TARJETA IT 4 -->
+      <a href="plantilla/plantilla_test.html?id=IT-4" class="glass-card rounded-2xl p-6 shadow-md hover:shadow-xl hover:border-brand-500 transition-all group flex flex-col justify-between border border-slate-200 dark:border-slate-800 sm:col-span-2 lg:col-span-1">
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <span class="px-3 py-1 rounded-lg bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-xs font-extrabold">
+              IT 4
+            </span>
+            <span class="text-xs text-slate-400 font-medium">20 Preguntas</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
+            Inspección
+          </h2>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+            Inspecciones periódicas de eficiencia energética y periodicidades de control reglamentario.
+          </p>
+        </div>
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center text-xs font-bold text-brand-600 dark:text-brand-400">
+          <span>Iniciar Test</span>
+          <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+        </div>
+      </a>
+
+    </div>
+  </main>
+</body>
+</html>
