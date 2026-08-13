@@ -1,4 +1,29 @@
 /* ==========================================================================
+   APP-RITE — Google Analytics 4 + Theme Manager
+   Measurement ID: G-ZS8D1W000D
+   ========================================================================== */
+
+(function initAnalytics() {
+  const MEASUREMENT_ID = 'G-ZS8D1W000D';
+
+  if (window.__appRiteAnalyticsInitialized) return;
+  window.__appRiteAnalyticsInitialized = true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag('js', new Date());
+  window.gtag('config', MEASUREMENT_ID);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+})();
+
+/* ==========================================================================
    APP-RITE — Theme Manager (Dark / Light Mode)
    Persists choice in localStorage ('rite_theme')
    ========================================================================== */
