@@ -25,11 +25,10 @@ body {
   height: 100%;
   z-index: -10;
   background-color: #0f172a;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(1, 122, 235, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+  background-image: url('../img/imgfondo-rite.webp');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Theme overlay layer */
@@ -40,11 +39,11 @@ body {
 }
 
 html:not(.dark) .bg-overlay-theme {
-  background-color: rgba(248, 250, 252, 0.95);
+  background-color: rgba(248, 250, 252, 0.90);
 }
 
 html.dark .bg-overlay-theme {
-  background-color: rgba(15, 23, 42, 0.96);
+  background-color: rgba(2, 6, 23, 0.94);
 }
 
 /* Glassmorphic card utility */
