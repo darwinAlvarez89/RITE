@@ -38,12 +38,14 @@ body {
   transition: background-color 0.3s ease;
 }
 
+/* Modo claro: la instalación térmica debe verse claramente sin competir con el contenido */
 html:not(.dark) .bg-overlay-theme {
-  background-color: rgba(248, 250, 252, 0.90);
+  background-color: rgba(248, 250, 252, 0.68);
 }
 
+/* Modo oscuro: conserva la fotografía visible y aplica un velo oscuro para mantener contraste */
 html.dark .bg-overlay-theme {
-  background-color: rgba(2, 6, 23, 0.94);
+  background-color: rgba(2, 6, 23, 0.62);
 }
 
 /* Glassmorphic card utility */
