@@ -48,6 +48,11 @@ html.dark .bg-overlay-theme {
   background-color: rgba(2, 6, 23, 0.62);
 }
 
+/* En modo oscuro, el título principal RITE usa un degradado claro uniforme para evitar que la E pierda contraste */
+html.dark header h1 > span.text-transparent {
+  background-image: linear-gradient(to right, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%) !important;
+}
+
 /* Glassmorphic card utility */
 .glass-card {
   background-color: rgba(255, 255, 255, 0.85);
